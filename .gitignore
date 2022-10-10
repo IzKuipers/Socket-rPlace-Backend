@@ -1,0 +1,4 @@
+node_modules
+dist
+grid.json
+users.json
