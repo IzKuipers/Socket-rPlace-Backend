@@ -50,3 +50,11 @@ export async function updateCoins(socket: Socket) {
 
   socket.emit("update-coins", userdata.coins);
 }
+
+export async function getCoins(username: string): Promise<number> {
+  const userdata = await getUser(username);
+
+  if (!userdata) return -1;
+
+  return userdata.coins || 0;
+}
