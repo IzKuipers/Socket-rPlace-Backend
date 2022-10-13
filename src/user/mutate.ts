@@ -47,3 +47,7 @@ export async function getUser(
 
   return false;
 }
+
+export async function userExists(username: string): Promise<boolean> {
+  return !!(await getUser(username));
+}

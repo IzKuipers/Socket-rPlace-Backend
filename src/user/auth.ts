@@ -5,7 +5,12 @@ import { changePresence, updateUserPresence } from "./presence";
 export async function join(client: string, username: string): Promise<boolean> {
   console.log(`User is joining with nickname '${username}'.`);
 
-  const result = await addUser({ online: true, name: username, color: "blue" });
+  const result = await addUser({
+    online: true,
+    name: username,
+    color: "blue",
+    coins: 0,
+  });
 
   if (!result) {
     changePresence(username, true);
