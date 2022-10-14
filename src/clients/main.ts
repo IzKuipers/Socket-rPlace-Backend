@@ -25,5 +25,8 @@ export async function removeClient(client: string) {
 }
 
 export async function broadcastClientsUpdate() {
+  console.log(
+    `clients: broadcastClientsUpdate: emitting event 'clients-update' with ${clients.length} clients`
+  );
   mainServer.emit("clients-update", clients);
 }

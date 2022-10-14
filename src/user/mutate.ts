@@ -41,6 +41,7 @@ export async function getUser(
     if (users[i].name == username) {
       cb(users[i], i);
       console.log(`getUser: Got userdata for '${username}'`);
+      /* updateUserPresence(); */
       return users[i];
     }
   }

@@ -1,3 +1,5 @@
+import { broadcastClientsUpdate } from "../clients/main";
+
 export const UserClients: Map<string, string> = new Map<string, string>([]);
 
 export async function assignUserClient(user: string, client: string) {
@@ -8,6 +10,8 @@ export async function assignUserClient(user: string, client: string) {
 
     UserClients.set(user, client);
 
+    broadcastClientsUpdate();
+
     return true;
   }
 
@@ -17,17 +21,21 @@ export async function assignUserClient(user: string, client: string) {
     )}'!`
   );
 
+  broadcastClientsUpdate();
+
   return false;
 }
 
 export function detachUserClient(user: string) {
-  /*   if (!UserClients.has(user)) {
+  if (!UserClients.has(user)) {
     console.log(
       `detachUserClient: Warning: can't detach user '${user}': no client assigned to that name.`
     );
 
+    broadcastClientsUpdate();
+
     return false;
-  } */
+  }
 
   console.log(
     `detachUserClient: Detaching '${UserClients.get(
@@ -36,6 +44,7 @@ export function detachUserClient(user: string) {
   );
 
   UserClients.delete(user);
+  broadcastClientsUpdate();
 
   return true;
 }
