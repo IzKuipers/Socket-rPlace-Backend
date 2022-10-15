@@ -11,7 +11,7 @@ export const socketListeners: SocketListeners = {
     username: string,
     cb: (user: User | null, coins: number) => void
   ) => {
-    await join(socket.id, username);
+    await join(socket, socket.id, username);
     cb((await getUser(username)) as User, await getCoins(username));
   },
   place: async (_, u: string, x: number, y: number, cb: (v: boolean) => {}) => {

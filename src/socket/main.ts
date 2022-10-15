@@ -9,7 +9,7 @@ export async function stopSocket(socket: Socket) {
     if (client[1] == socket.id) {
       detachUserClient(client[0]);
 
-      leave(client[0]);
+      leave(socket, client[0]);
     }
   }
 }

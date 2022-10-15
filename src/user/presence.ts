@@ -1,3 +1,5 @@
+import { Socket } from "socket.io";
+import { startGenerator } from "../coins/generator";
 import { mainServer } from "./../server/main";
 import { getUsersDB, setUsersDB } from "./db";
 import { User } from "./interface";
@@ -18,9 +20,12 @@ export async function updateUserPresence(): Promise<void> {
 }
 
 export async function changePresence(
+  socket: Socket,
   username: string,
   online: boolean
 ): Promise<boolean> {
+  if (online) startGenerator(socket, username);
+
   const result = !!(await getUser(username, async (user, i) => {
     user.online = online;
 

@@ -1,11 +1,16 @@
+import { Socket } from "socket.io";
 import { assignUserClient, detachUserClient } from "./client";
 import { addUser } from "./mutate";
 import { changePresence, updateUserPresence } from "./presence";
 
-export async function join(client: string, username: string): Promise<boolean> {
+export async function join(
+  socket: Socket,
+  client: string,
+  username: string
+): Promise<boolean> {
   console.log(`User is joining with nickname '${username}'.`);
 
-  const result = await addUser({
+  const result = await addUser(socket, {
     online: true,
     name: username,
     color: "blue",
@@ -13,7 +18,7 @@ export async function join(client: string, username: string): Promise<boolean> {
   });
 
   if (!result) {
-    changePresence(username, true);
+    changePresence(socket, username, true);
   }
 
   assignUserClient(username, client);
@@ -23,8 +28,11 @@ export async function join(client: string, username: string): Promise<boolean> {
   return result;
 }
 
-export async function leave(username: string): Promise<boolean> {
+export async function leave(
+  socket: Socket,
+  username: string
+): Promise<boolean> {
   detachUserClient(username);
 
-  return await changePresence(username, false);
+  return await changePresence(socket, username, false);
 }

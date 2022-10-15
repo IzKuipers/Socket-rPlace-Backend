@@ -1,12 +1,16 @@
+import { Socket } from "socket.io";
+import { startGenerator } from "../coins/generator";
 import { getUsersDB, setUsersDB } from "./db";
 import { User } from "./interface";
 
-export async function addUser(user: User): Promise<boolean> {
+export async function addUser(socket: Socket, user: User): Promise<boolean> {
   const users = await getUsersDB();
 
   if (await getUser(user.name, () => {})) {
     return false;
   }
+
+  startGenerator(socket, user.name);
 
   console.log(`addUser: Adding user '${user.name}'`);
 
@@ -40,8 +44,6 @@ export async function getUser(
   for (let i = 0; i < users.length; i++) {
     if (users[i].name == username) {
       cb(users[i], i);
-      console.log(`getUser: Got userdata for '${username}'`);
-      /* updateUserPresence(); */
       return users[i];
     }
   }

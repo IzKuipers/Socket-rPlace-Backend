@@ -11,7 +11,7 @@ export async function socketListener(socket: Socket) {
   registerClient(socket.id);
 
   socket.on("disconnect", () => {
-    leave(getUserByClient(socket.id) as string);
+    leave(socket, getUserByClient(socket.id) as string);
     removeClient(socket.id);
     stopSocket(socket);
   });
