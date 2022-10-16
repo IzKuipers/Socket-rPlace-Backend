@@ -38,5 +38,6 @@ export async function socketListener(socket: Socket) {
   }
 
   updateUserPresence();
-  socket.emit("server-connected", await readGrid());
+  socket.emit("server-connected");
+  socket.emit("update-grid", await readGrid());
 }

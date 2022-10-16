@@ -5,6 +5,7 @@ import { getUser } from "../user/mutate";
 import { updateUserPresence } from "../user/presence";
 
 export const Generators: { [key: string]: NodeJS.Timer } = {};
+export const GEN_INT = 3500;
 
 export async function startGenerator(socket: Socket, username: string) {
   if (Generators[username]) clearInterval(Generators[username]);
@@ -14,7 +15,7 @@ export async function startGenerator(socket: Socket, username: string) {
       const users = await getUsersDB();
       const level = Math.floor(user.coins / 100);
 
-      user.coins += level > 1 ? Math.floor(5 * level) : 5;
+      user.coins += user.coins > 250000 ? 5000 : 5 * (level || 1);
 
       users[i] = user;
 
@@ -23,5 +24,5 @@ export async function startGenerator(socket: Socket, username: string) {
       updateCoins(socket);
       updateUserPresence();
     });
-  }, 3500);
+  }, GEN_INT);
 }
