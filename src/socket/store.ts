@@ -1,12 +1,16 @@
+import { Socket } from "socket.io";
+import { ShopItem } from "./../shop/interface";
 import { Cell, Position } from "./../grid/interface";
 import { GEN_INT } from "./../coins/generator";
 import { placeCell, placeCells } from "../grid/main";
 import { join } from "../user/auth";
-import { CELL_PRICE, getCoins } from "../user/coins";
+import { CELL_PRICE, getCoins, updateCoins } from "../user/coins";
 import { User } from "../user/interface";
 import { getUser } from "../user/mutate";
 import { SocketListeners } from "./interface";
 import { getUsersDB, setUsersDB } from "../user/db";
+import Products from "../shop/store";
+import { getShopItem, purchaseItem } from "../shop/main";
 
 export const socketListeners: SocketListeners = {
   join: async (
@@ -70,6 +74,8 @@ export const socketListeners: SocketListeners = {
       users[i] = user;
 
       cb(await setUsersDB(users), "written");
+
+      updateCoins(_);
     });
   },
   getgenint: async (_, cb: (i: number) => void) => {
@@ -85,5 +91,15 @@ export const socketListeners: SocketListeners = {
 
       await setUsersDB(db);
     });
+  },
+  getshopitems: (_, cb: (i: ShopItem[]) => void) => {
+    cb(Products);
+  },
+  purchase(socket: Socket, username: string, item: string) {
+    const i = getShopItem(item);
+
+    if (!i) return;
+
+    purchaseItem(username, socket, i);
   },
 };

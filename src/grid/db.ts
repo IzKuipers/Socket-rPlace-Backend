@@ -21,8 +21,12 @@ export async function writeGrid(g: Grid): Promise<boolean> {
 
   counter++;
 
-  if (counter >= 25) {
-    await writeFile("grid.json", JSON.stringify(grid), { encoding: "utf-8" });
+  if (counter >= 15) {
+    const str = JSON.stringify(grid);
+    console.log(
+      `writeGrid: saving grid to ./grid.json (${str.length / 1024}KB)`
+    );
+    await writeFile("grid.json", str, { encoding: "utf-8" });
     counter = 0;
   }
 

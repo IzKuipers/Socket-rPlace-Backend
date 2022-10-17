@@ -15,6 +15,8 @@ export async function join(
     name: username,
     color: "blue",
     coins: 0,
+    radius: 1,
+    purchases: [],
   });
 
   if (!result) {

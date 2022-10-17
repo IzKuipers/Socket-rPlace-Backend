@@ -20,9 +20,12 @@ export async function setUsersDB(u: User[]): Promise<boolean> {
 
   counter++;
 
-  if (counter > 25) {
-    await writeFile("users.json", JSON.stringify(users), { encoding: "utf-8" });
-
+  if (counter > 15 && users.length) {
+    const str = JSON.stringify(users);
+    console.log(
+      `setUsersDB: saving grid to ./users.json (${str.length / 1024}KB)`
+    );
+    await writeFile("users.json", str, { encoding: "utf-8" });
     counter = 0;
   }
 

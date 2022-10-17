@@ -3,4 +3,6 @@ export interface User {
   name: string;
   color: string;
   coins: number;
+  radius: number;
+  purchases: string[];
 }
