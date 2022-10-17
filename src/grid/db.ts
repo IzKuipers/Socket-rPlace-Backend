@@ -1,24 +1,30 @@
 import { readFile, writeFile } from "fs/promises";
 import { Grid } from "./interface";
 
-export async function readGrid(): Promise<Grid> {
-  try {
-    const file = await readFile("grid.json", { encoding: "utf-8" });
+export let grid: Grid = [];
+let counter = 0;
 
-    return JSON.parse(file) as Grid;
-  } catch {
-    await writeFile("grid.json", "[]", { encoding: "utf-8" });
+export async function getDB() {
+  const file = await readFile("grid.json", { encoding: "utf-8" });
 
-    return [];
-  }
+  grid = JSON.parse(file) as Grid;
 }
 
-export async function writeGrid(grid: Grid): Promise<boolean> {
-  try {
-    await writeFile("grid.json", JSON.stringify(grid), { encoding: "utf-8" });
+getDB();
 
-    return true;
-  } catch {
-    return false;
+export async function readGrid(): Promise<Grid> {
+  return grid;
+}
+
+export async function writeGrid(g: Grid): Promise<boolean> {
+  grid = g;
+
+  counter++;
+
+  if (counter >= 25) {
+    await writeFile("grid.json", JSON.stringify(grid), { encoding: "utf-8" });
+    counter = 0;
   }
+
+  return true;
 }

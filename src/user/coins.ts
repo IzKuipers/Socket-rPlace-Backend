@@ -4,7 +4,7 @@ import { getUsersDB, setUsersDB } from "./db";
 import { getUser } from "./mutate";
 import { updateUserPresence } from "./presence";
 
-export const CELL_PRICE = 100;
+export const CELL_PRICE = 25;
 
 export async function increment(
   socket: Socket,

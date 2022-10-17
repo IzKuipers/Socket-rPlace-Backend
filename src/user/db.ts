@@ -1,24 +1,30 @@
 import { readFile, writeFile } from "fs/promises";
 import { User } from "./interface";
 
-export async function getUsersDB(): Promise<User[]> {
-  try {
-    const file = await readFile("users.json", { encoding: "utf-8" });
+export let users: User[] = [];
+export let counter = 0;
+export async function initDB() {
+  const file = await readFile("users.json", { encoding: "utf-8" });
 
-    return JSON.parse(file) as User[];
-  } catch {
-    await writeFile("users.json", "[]", { encoding: "utf-8" });
-
-    return [];
-  }
+  users = JSON.parse(file) as User[];
 }
 
-export async function setUsersDB(users: User[]): Promise<boolean> {
-  try {
+initDB();
+
+export async function getUsersDB(): Promise<User[]> {
+  return users;
+}
+
+export async function setUsersDB(u: User[]): Promise<boolean> {
+  users = u;
+
+  counter++;
+
+  if (counter > 25) {
     await writeFile("users.json", JSON.stringify(users), { encoding: "utf-8" });
 
-    return true;
-  } catch {
-    return false;
+    counter = 0;
   }
+
+  return true;
 }

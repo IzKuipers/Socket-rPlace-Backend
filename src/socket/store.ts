@@ -1,6 +1,6 @@
-import { Position } from "./../grid/interface";
+import { Cell, Position } from "./../grid/interface";
 import { GEN_INT } from "./../coins/generator";
-import { placeCell } from "../grid/main";
+import { placeCell, placeCells } from "../grid/main";
 import { join } from "../user/auth";
 import { CELL_PRICE, getCoins } from "../user/coins";
 import { User } from "../user/interface";
@@ -41,8 +41,10 @@ export const socketListeners: SocketListeners = {
         cb = (v: boolean, msg: string) => {
           console.log(v, msg);
         };
+
       if (!user) {
         cb(false, "invalid_user");
+
         return;
       }
 
@@ -57,10 +59,13 @@ export const socketListeners: SocketListeners = {
 
       user.coins -= price;
 
+      let c: Cell[] = [];
+
       for (let i = 0; i < cells.length; i++) {
-        if (!(await placeCell(cells[i].x, cells[i].y, user.color)))
-          cb(false, "place_failure");
+        c.push({ ...cells[i], c: user.color });
       }
+
+      await placeCells(...c);
 
       users[i] = user;
 
@@ -69,5 +74,16 @@ export const socketListeners: SocketListeners = {
   },
   getgenint: async (_, cb: (i: number) => void) => {
     cb(GEN_INT);
+  },
+  setclr: async (_, u: string, clr: string) => {
+    await getUser(u, async (usr, i) => {
+      const db = await getUsersDB();
+
+      usr.color = clr;
+
+      db[i] = usr;
+
+      await setUsersDB(db);
+    });
   },
 };
