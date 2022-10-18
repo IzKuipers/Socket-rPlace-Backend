@@ -43,7 +43,7 @@ export const socketListeners: SocketListeners = {
     await getUser(u, async (user, i) => {
       if (!cb)
         cb = (v: boolean, msg: string) => {
-          console.log(v, msg);
+          console.log(`event "placeMult": `, v, msg);
         };
 
       if (!user) {

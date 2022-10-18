@@ -6,11 +6,12 @@ export async function buyRadius(
   username: string,
   userIndex: number,
   rad: number,
-  socket: Socket
+  socket: Socket,
+  idx: number
 ) {
   let smallerversions = [];
 
-  for (let i = 0; i < rad - 1; i++) {
+  for (let i = 0; i < idx; i++) {
     smallerversions.push(`radinc${i}`);
   }
 

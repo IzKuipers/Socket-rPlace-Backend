@@ -1,5 +1,6 @@
 import { Socket } from "socket.io";
 import { assignUserClient, detachUserClient } from "./client";
+import { getRandomAvailableColor } from "./color";
 import { addUser } from "./mutate";
 import { changePresence, updateUserPresence } from "./presence";
 
@@ -13,10 +14,11 @@ export async function join(
   const result = await addUser(socket, {
     online: true,
     name: username,
-    color: "blue",
+    color: await getRandomAvailableColor(),
     coins: 0,
     radius: 1,
     genspeed: 3500,
+    genamnt: 5,
     purchases: [],
   });
 

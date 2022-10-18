@@ -13,11 +13,13 @@ export async function startGenerator(socket: Socket, username: string) {
   if (Generators[username]) clearInterval(Generators[username]);
 
   Generators[username] = setInterval(async () => {
+    console.log(
+      `Generator: TICK for user ${user.name}: ${user.genamnt} every ${user.genspeed}ms`
+    );
     await getUser(username, async (user, i) => {
       const users = await getUsersDB();
-      const level = Math.floor(user.coins / 100);
 
-      user.coins += user.coins > 250000 ? 5000 : 5 * (level || 1);
+      user.coins += user.genamnt;
 
       users[i] = user;
 
@@ -25,6 +27,7 @@ export async function startGenerator(socket: Socket, username: string) {
 
       updateCoins(socket);
       updateUserPresence();
+      socket.emit("update-user", user);
     });
   }, user.genspeed);
 }

@@ -12,4 +12,11 @@ export interface ShopItem {
     userIndex: number,
     username: string
   ) => void;
+  cat?: Cat;
+}
+
+export interface Cat {
+  tag: string;
+  icon: string;
+  name: string;
 }
