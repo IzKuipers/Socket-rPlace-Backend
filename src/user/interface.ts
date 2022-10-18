@@ -4,5 +4,6 @@ export interface User {
   color: string;
   coins: number;
   radius: number;
+  genspeed: number;
   purchases: string[];
 }

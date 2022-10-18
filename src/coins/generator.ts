@@ -8,6 +8,8 @@ export const Generators: { [key: string]: NodeJS.Timer } = {};
 export const GEN_INT = 3500;
 
 export async function startGenerator(socket: Socket, username: string) {
+  const user = await getUser(username);
+  if (!user) return;
   if (Generators[username]) clearInterval(Generators[username]);
 
   Generators[username] = setInterval(async () => {
@@ -24,5 +26,5 @@ export async function startGenerator(socket: Socket, username: string) {
       updateCoins(socket);
       updateUserPresence();
     });
-  }, GEN_INT);
+  }, user.genspeed);
 }

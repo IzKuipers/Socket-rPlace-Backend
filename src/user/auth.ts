@@ -16,6 +16,7 @@ export async function join(
     color: "blue",
     coins: 0,
     radius: 1,
+    genspeed: 3500,
     purchases: [],
   });
 
