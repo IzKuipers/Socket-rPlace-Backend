@@ -1,3 +1,4 @@
+import { upgradeUserColor } from "./color";
 import { upgradeGenAmount, upgradeGenSpeed } from "./genspeed";
 import { Cat, ShopItem } from "./interface";
 import { buyRadius } from "./radius";
@@ -12,6 +13,11 @@ const Cats: { [key: string]: Cat } = {
     icon: "speed",
     name: "Generators",
     tag: "genupg",
+  },
+  color: {
+    icon: "palette",
+    name: "Colors",
+    tag: "clr",
   },
 };
 
@@ -140,6 +146,105 @@ const Products: ShopItem[] = [
       upgradeGenSpeed(userIndex, username, 2000, socket, 6);
     },
     cat: Cats["gen"],
+  },
+  {
+    title: "Red",
+    description: "Change your color to red",
+    icon: "palette",
+    price: 1000,
+    exec: async (_, socket, userIndex, username) => {
+      upgradeUserColor(username, userIndex, "red", socket);
+    },
+    tag: "clrRed",
+    cat: Cats["color"],
+  },
+  {
+    title: "Green",
+    description: "Change your color to green",
+    icon: "palette",
+    price: 1000,
+    exec: async (_, socket, userIndex, username) => {
+      upgradeUserColor(username, userIndex, "green", socket);
+    },
+    tag: "clrGreen",
+    cat: Cats["color"],
+  },
+  {
+    title: "Orange",
+    description: "Change your color to orange",
+    icon: "palette",
+    price: 1000,
+    exec: async (_, socket, userIndex, username) => {
+      upgradeUserColor(username, userIndex, "orange", socket);
+    },
+    tag: "clrOrange",
+    cat: Cats["color"],
+  },
+  {
+    title: "Yellow",
+    description: "Change your color to yellow",
+    icon: "palette",
+    price: 1000,
+    exec: async (_, socket, userIndex, username) => {
+      upgradeUserColor(username, userIndex, "yellow", socket);
+    },
+    tag: "clrYellow",
+    cat: Cats["color"],
+  },
+  {
+    title: "Blue",
+    description: "Change your color to blue",
+    icon: "palette",
+    price: 1000,
+    exec: async (_, socket, userIndex, username) => {
+      upgradeUserColor(username, userIndex, "blue", socket);
+    },
+    tag: "clrBlue",
+    cat: Cats["color"],
+  },
+  {
+    title: "Aqua",
+    description: "Change your color to aqua",
+    icon: "palette",
+    price: 1000,
+    exec: async (_, socket, userIndex, username) => {
+      upgradeUserColor(username, userIndex, "aqua", socket);
+    },
+    tag: "clrAqua",
+    cat: Cats["color"],
+  },
+  {
+    title: "Purple",
+    description: "Change your color to Purple",
+    icon: "palette",
+    price: 1000,
+    exec: async (_, socket, userIndex, username) => {
+      upgradeUserColor(username, userIndex, "purple", socket);
+    },
+    tag: "clrPurple",
+    cat: Cats["color"],
+  },
+  {
+    title: "Pink",
+    description: "Change your color to pink",
+    icon: "palette",
+    price: 1000,
+    exec: async (_, socket, userIndex, username) => {
+      upgradeUserColor(username, userIndex, "pink", socket);
+    },
+    tag: "clrPink",
+    cat: Cats["color"],
+  },
+  {
+    title: "Lime",
+    description: "Change your color to lime",
+    icon: "palette",
+    price: 10000,
+    exec: async (_, socket, userIndex, username) => {
+      upgradeUserColor(username, userIndex, "lime", socket);
+    },
+    tag: "clrLime",
+    cat: Cats["color"],
   },
 ];
 

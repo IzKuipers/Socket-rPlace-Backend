@@ -9,4 +9,13 @@ export interface User {
   purchases: string[];
 }
 
-export type DotColor = "red" | "green" | "orange" | "yellow" | "blue" | "aqua";
+export type DotColor =
+  | "red"
+  | "green"
+  | "orange"
+  | "yellow"
+  | "blue"
+  | "aqua"
+  | "lime"
+  | "purple"
+  | "pink";

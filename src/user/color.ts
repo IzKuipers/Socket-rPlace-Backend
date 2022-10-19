@@ -4,7 +4,17 @@ import { DotColor } from "./interface";
 export async function getRandomAvailableColor(): Promise<DotColor> {
   const users = await getUsersDB();
 
-  const colors = ["red", "green", "orange", "yellow", "blue", "aqua"];
+  const colors = [
+    "red",
+    "green",
+    "orange",
+    "yellow",
+    "blue",
+    "aqua",
+    "purple",
+    "pink",
+    "lime",
+  ];
   let used: DotColor[] = [];
 
   for (let i = 0; i < users.length; i++) {

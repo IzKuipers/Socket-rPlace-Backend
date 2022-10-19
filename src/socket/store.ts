@@ -9,8 +9,9 @@ import { User } from "../user/interface";
 import { getUser } from "../user/mutate";
 import { SocketListeners } from "./interface";
 import { getUsersDB, setUsersDB } from "../user/db";
-import Products from "../shop/store";
 import { getShopItem, purchaseItem } from "../shop/main";
+import { readGrid } from "../grid/db";
+import Products from "../shop/store";
 
 export const socketListeners: SocketListeners = {
   join: async (
@@ -65,8 +66,20 @@ export const socketListeners: SocketListeners = {
 
       let c: Cell[] = [];
 
+      const grid = await readGrid();
+
       for (let i = 0; i < cells.length; i++) {
         c.push({ ...cells[i], c: user.color });
+
+        for (let j = 0; j < grid.length; j++) {
+          if (
+            grid[j].x == cells[i].x &&
+            grid[j].y == cells[i].y &&
+            grid[j].c == user.color
+          ) {
+            user.coins += CELL_PRICE;
+          }
+        }
       }
 
       await placeCells(...c);
