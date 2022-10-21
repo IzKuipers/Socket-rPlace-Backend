@@ -15,7 +15,7 @@ export async function join(
     online: true,
     name: username,
     color: await getRandomAvailableColor(),
-    coins: 0,
+    coins: 300,
     radius: 1,
     genspeed: 3500,
     genamnt: 5,
